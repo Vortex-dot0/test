@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortex Frames - Watch Shows Online</title>
+  <style>
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: white;
+  overflow-x: hidden;
+  background-image: url('Comp 1_00001.png'); /* Slika kao pozadina */
+  background-size: cover; /* Slika popunjava ceo ekran */
+  background-position: center center; /* Sredi pozadinu da bude centrirana */
+  background-attachment: fixed; /* Slika se ne pomera pri skrolovanju */
+  transition: background-color 0.3s ease; /* Animacija za promenu boje pozadine */
+}
+
+body.scrolled {
+  background-color: rgba(255, 0, 0, 0.7); /* Kada se skroluje, pozadina postaje crvena (ili bilo koja boja po tvom izboru) */
+}
+
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .header .logo {
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      color: #e50914;
+    }
+
+    .header .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .header button {
+      padding: 10px 20px;
+      background-color: #e50914;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .header button:hover {
+      background-color: #b81e23;
+    }
+
+    .hero {
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .hero .buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .hero .buttons button {
+      padding: 12px 30px;
+      background-color: #e50914;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .hero .buttons button:hover {
+      background-color: #b81e23;
+    }
+
+    .movie-row {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .movie-row h2 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .movie-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+
+    .movie {
+      width: 250px;
+      height: 375px;
+      background-color: #bb2b2b;
+      border-radius: 5px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .movie:hover {
+      transform: scale(1.05);
+    }
+
+    .movie img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .down-arrow {
+      width: 30px;
+      height: 30px;
+      border-left: 5px solid rgb(209, 42, 42);
+      border-bottom: 5px solid rgb(185, 39, 39);
+      transform: rotate(0deg);
+      margin: 20px auto;
+      cursor: pointer;
+      animation: bounce 1.5s infinite;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) rotate(0deg);
+      z-index: 999;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(10px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    #userInfo img {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      margin-right: 10px;
+    }
+
+    #userInfo span {
+      font-weight: bold;
+    }
+
+    /* Modal Styling */
+    #registerModal, #loginModal {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 30px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+      width: 300px;
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translate(-50%, -100%);
+      }
+      to {
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    #registerModal input, #loginModal input {
+      width: 50%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    #registerModal button, #loginModal button {
+      width: 50%;
+      padding: 10px;
+      background-color: #e50914;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <span class="vortex" style="font-weight: bold;">MORTEX</span> 
+      <span class="media" style="color: rgb(255, 255, 255); font-weight: bold;">FRAMES</span>
+    </div>
+    
+    <div class="auth-buttons">
+      <button id="loginBtn" onclick="openLoginModal()">Log In</button>
+      <button id="registerBtn" onclick="openRegisterModal()">Register</button>
+      <button id="logoutBtn" style="display:none;" onclick="logout()">Log Out</button>
+      <div id="userInfo" style="display:none;">
+        <img id="userAvatar" src="https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg" alt="User Avatar">
+        <span id="username"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <h1 style="font-weight: bold; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); font-size: 60px; font-family: 'Arial Black', Arial, sans-serif;">
+        Unlimited Movies <br> and TV Shows
+      </h1>
+      
+      <p style="font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
+        Watch anytime, anywhere
+      </p>
+
+      <p style="font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); position: absolute; top: 80%; left: 50%; transform: translateX(-50%);">
+        Let's get started!
+      </p>
+      
+      
+      <div class="buttons">
+        <button onclick="openAboutUsModal()">About Us</button>
+        <button onclick="openUploadMovieModal()">Watch Movies For Free</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="movie-row">
+    <h2>Trending Now</h2>
+    <div class="movie-container">
+      <div class="movie">
+        <img src="https://via.placeholder.com/200x300?text=Movie+1" alt="movie 1">
+      </div>
+      <div class="movie">
+        <img src="https://via.placeholder.com/200x300?text=Movie+2" alt="movie 2">
+      </div>
+      <div class="movie">
+        <img src="https://via.placeholder.com/200x300?text=Movie+3" alt="movie 3">
+      </div>
+      <div class="movie">
+        <img src="https://via.placeholder.com/200x300?text=Movie+4" alt="movie 4">
+      </div>
+      <div class="movie">
+        <img src="https://via.placeholder.com/200x300?text=Movie+5" alt="movie 5">
+      </div>
+      <div class="movie">
+        <img src="https://via.placeholder.com/200x300?text=Movie+6" alt="movie">
+      </div>
+    </div>
+  </div>
+
+  <div class="down-arrow" onclick="scrollToSection()"></div>
+
+  <!-- Register Modal -->
+  <div id="registerModal">
+    <button class="close-btn" onclick="closeRegisterModal()">×</button>
+    <h2>Register</h2>
+    <input type="text" id="registerUsername" placeholder="Username">
+    <input type="password" id="registerPassword" placeholder="Password">
+    <button onclick="register()">Register</button>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal">
+    <button class="close-btn" onclick="closeLoginModal()">×</button>
+    <h2>Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script>
+    window.addEventListener("scroll", function() {
+      let scrollPosition = window.scrollY;
+      let body = document.body;
+
+      let scrollFraction = scrollPosition / document.documentElement.scrollHeight;
+      if (scrollFraction < 0.5) {
+      } else {
+      }
+    });
+
+    function scrollToSection() {
+      document.querySelector('.movie-row').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = function() {
+      const storedUsername = localStorage.getItem("username");
+      if (storedUsername) {
+        document.getElementById("userInfo").style.display = "flex";
+        document.getElementById("username").innerText = storedUsername;
+        document.getElementById("loginBtn").style.display = "none";
+        document.getElementById("logoutBtn").style.display = "inline-block";
+      } else {
+        document.getElementById("userInfo").style.display = "none";
+      }
+    };
+
+    function openRegisterModal() {
+      document.getElementById("registerModal").style.display = "block";
+    }
+
+    function closeRegisterModal() {
+      document.getElementById("registerModal").style.display = "none";
+    }
+
+    function openLoginModal() {
+      document.getElementById("loginModal").style.display = "block";
+    }
+
+    function closeLoginModal() {
+      document.getElementById("loginModal").style.display = "none";
+    }
+
+    function register() {
+      const username = document.getElementById("registerUsername").value;
+      const password = document.getElementById("registerPassword").value;
+      if (username && password) {
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password); 
+        alert("Registration successful! Please log in.");
+        closeRegisterModal();
+        openLoginModal();
+        
+      } else {
+        alert("Please fill in both fields.");
+      }
+    }
+
+    function login() {
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+      const storedUsername = localStorage.getItem("username");
+      const storedPassword = localStorage.getItem("password");
+
+      if (username === storedUsername && password === storedPassword) {
+        document.getElementById("userInfo").style.display = "flex";
+        document.getElementById("username").innerText = username;
+        document.getElementById("loginBtn").style.display = "none";
+        document.getElementById("logoutBtn").style.display = "inline-block";
+        closeLoginModal();
+      } else {
+        alert("Invalid credentials. Please try again.");
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("username");
+      localStorage.removeItem("password");
+      document.getElementById("userInfo").style.display = "none";
+      document.getElementById("loginBtn").style.display = "inline-block";
+      document.getElementById("logoutBtn").style.display = "none";
+      alert("Logged out successfully.");
+    }
+    function openAboutUsModal() {
+  // Create the modal background
+  const modalBackground = document.createElement('div');
+  modalBackground.style.position = 'fixed';
+  modalBackground.style.top = '0';
+  modalBackground.style.left = '0';
+  modalBackground.style.width = '100%';
+  modalBackground.style.height = '100%';
+  modalBackground.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  modalBackground.style.display = 'flex';
+  modalBackground.style.justifyContent = 'center';
+  modalBackground.style.alignItems = 'center';
+  modalBackground.style.zIndex = '1000';
+
+  // Create the modal content with the About Us text
+  const modalContent = `
+    <div style="background-color: rgba(0, 0, 0, 0.8); color: white; padding: 20px; max-width: 600px; width: 100%; border-radius: 10px; text-align: center;">
+      <button onclick="closeAboutUsModal()" style="position: absolute; top: 10px; right: 10px; background-color: transparent; color: white; border: none; font-size: 20px;">×</button>
+      <h2>About Vortex Media</h2>
+      <p>
+        Vortex Media je napredna streaming platforma koja omogućava autorima da besplatno objavljuju svoje filmove, bez potrebe za posrednicima i distributerima.
+      </p>
+      <p>
+        Naša misija je da pružimo prostor za kreativne filmove, omogućavajući im da dođu do široke publike.
+        Platforma nudi najkvalitetnije i najpopularnije naslove koji će biti redovno dodavani,
+        čineći sadržaj uvek svežim i relevantnim za naše korisnike.
+      </p>
+      <p>
+        O Vortex Media: Vortex Media je srpska filmska produkcija koju su osnovali Marko Jukić i Aleksa Mitrović u aprilu 2025. godine.
+        Naša vizija je da unapredimo filmsku industriju u regionu i pružimo inovativnu i pristupačnu platformu za filmske stvaraoce širom sveta.
+      </p>
+    </div>
+  `;
+
+  // Add the modal content inside the modal background
+  modalBackground.innerHTML = modalContent;
+
+  // Append the modal to the body
+  document.body.appendChild(modalBackground);
+}
+
+// Function to close the modal
+function closeAboutUsModal() {
+  // Find the modal and remove it from the DOM
+  const modal = document.querySelector('div[style*="position: fixed"]');
+  if (modal) {
+    modal.remove();
+  }
+}
+
+// Function open Upload Movie button
+
+
+function openUploadMovieModal() {
+  // Create the modal background
+  const modalBackground = document.createElement('div');
+  modalBackground.style.position = 'fixed';
+  modalBackground.style.top = '0';
+  modalBackground.style.left = '0';
+  modalBackground.style.width = '100%';
+  modalBackground.style.height = '100%';
+  modalBackground.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  modalBackground.style.display = 'flex';
+  modalBackground.style.justifyContent = 'center';
+  modalBackground.style.alignItems = 'center';
+  modalBackground.style.zIndex = '1000';
+
+  // Create the modal content with the About Us text
+  const modalContent = `
+    <div style="background-color: rgba(0, 0, 0, 0.8); color: white; padding: 20px; max-width: 600px; width: 100%; border-radius: 10px; text-align: center;">
+      <button onclick="closeAboutUsModal()" style="position: absolute; top: 10px; right: 10px; background-color: transparent; color: white; border: none; font-size: 20px;">×</button>
+      <h2>Here's how you can stream your favourite movies</h2>
+      <p>
+        install Vortex Media software and watch movies on our streaming platform
+        <div class="video-link">
+  <h3>Download our app on phone!</h3>
+  <a href="https://www.youtube.com/watch?v=_DCtIv_n1zo&ab_channel=ChodaClips" target="_blank">
+    <button>Watch Video</button>
+  </a>
+</div>
+  </a>
+</div>
+    
+      </p>
+    </div>
+  `;
+
+  // Add the modal content inside the modal background
+  modalBackground.innerHTML = modalContent;
+
+  // Append the modal to the body
+  document.body.appendChild(modalBackground);
+}
+
+// Function to close the modal
+function closeAboutUsModal() {
+  // Find the modal and remove it from the DOM
+  const modal = document.querySelector('div[style*="position: fixed"]');
+  if (modal) {
+    modal.remove();
+  }
+  
+}
+
+
+  </script>
+  
+
+
+</body>
+</html>
