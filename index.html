@@ -226,6 +226,53 @@
       font-size: 20px;
       cursor: pointer;
     }
+
+    /* === MEDIA QUERY === */
+    @media screen and (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .hero .buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .movie-container {
+        gap: 10px;
+      }
+
+      .movie {
+        width: 160px;
+        height: 240px;
+      }
+
+      #userInfo img {
+        width: 50px;
+        height: 50px;
+      }
+
+      #registerModal, #loginModal {
+        width: 90%;
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -358,63 +405,10 @@
       document.getElementById("userInfo").style.display = "none";
       document.getElementById("loginBtn").style.display = "inline-block";
       document.getElementById("logoutBtn").style.display = "none";
-      alert("Logged out successfully.");
-    }
-
-    function openAboutUsModal() {
-      const modalBackground = document.createElement('div');
-      modalBackground.style.position = 'fixed';
-      modalBackground.style.top = '0';
-      modalBackground.style.left = '0';
-      modalBackground.style.width = '100%';
-      modalBackground.style.height = '100%';
-      modalBackground.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-      modalBackground.style.display = 'flex';
-      modalBackground.style.justifyContent = 'center';
-      modalBackground.style.alignItems = 'center';
-      modalBackground.style.zIndex = '1000';
-
-      modalBackground.innerHTML = `
-        <div style="background-color: rgba(0, 0, 0, 0.8); color: white; padding: 20px; max-width: 600px; width: 100%; border-radius: 10px; text-align: center; position: relative;">
-          <button onclick="this.parentElement.parentElement.remove()" style="position: absolute; top: 10px; right: 10px; background-color: transparent; color: white; border: none; font-size: 20px;">×</button>
-          <h2>About Vortex Media</h2>
-          <p>
-            Vortex Media je napredna streaming platforma koja omogućava autorima da besplatno objavljuju svoje filmove bez posrednika.
-          </p>
-          <p>
-            Naša misija je da pružimo prostor za kreativne filmove i omogućimo im dolazak do šire publike.
-            Osnovali su je Marko Jukić i Aleksa Mitrović u aprilu 2025.
-          </p>
-        </div>
-      `;
-
-      document.body.appendChild(modalBackground);
-    }
-
-    function openUploadMovieModal() {
-      const modalBackground = document.createElement('div');
-      modalBackground.style.position = 'fixed';
-      modalBackground.style.top = '0';
-      modalBackground.style.left = '0';
-      modalBackground.style.width = '100%';
-      modalBackground.style.height = '100%';
-      modalBackground.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-      modalBackground.style.display = 'flex';
-      modalBackground.style.justifyContent = 'center';
-      modalBackground.style.alignItems = 'center';
-      modalBackground.style.zIndex = '1000';
-
-      modalBackground.innerHTML = `
-        <div style="background-color: rgba(0, 0, 0, 0.8); color: white; padding: 30px; width: 400px; border-radius: 10px; text-align: center; position: relative;">
-          <button onclick="this.parentElement.parentElement.remove()" style="position: absolute; top: 10px; right: 10px; background-color: transparent; color: white; border: none; font-size: 20px;">×</button>
-          <h2>Upload Coming Soon</h2>
-          <p>Uskoro ćete moći da postavljate svoje filmove i delite ih sa svetom putem Mortex Frames platforme.</p>
-        </div>
-      `;
-
-      document.body.appendChild(modalBackground);
     }
   </script>
+
 </body>
 </html>
+
 
